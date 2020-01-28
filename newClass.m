@@ -1,5 +1,5 @@
 function newClass(varargin)
-%NEWCLASS Create a new file for editing a class
+% Create a new file for editing a class.
 %
 %   newClass(NEWCLASSNAME) opens the editor and pastes the content of a
 %   user-defined template into the file NEWCLASSNAME.m.
@@ -10,7 +10,7 @@ function newClass(varargin)
 %
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2011-07-26,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -117,8 +117,8 @@ end
             datestr(now, 29)
             datestr(now, 10)
             'David Legland'
-            'david.legland@inra.fr'
-            'INRA - BIA-BIBS'};
+            'david.legland@inrae.fr'
+            'INRAE - BIA-BIBS'};
         
         for k = 1:numel(repstr)
             template = strrep(template, repstr{k}, repwithstr{k});
