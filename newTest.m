@@ -69,7 +69,7 @@ end
         
         template = { ...
             'function test_suite = $filename'
-            '%$FILENAME  Test case for the file $funname'
+            '%$FILENAME  Test case for the file $funname.'
             '%'
             '%   Test case for the file $funname'
             '%'

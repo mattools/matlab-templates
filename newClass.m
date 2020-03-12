@@ -63,7 +63,7 @@ end
         
         template = { ...
             'classdef $filename < handle'
-            '%$FILENAME  One-line description here, please.'
+            '%$ One-line description here, please.'
             '%'
             '%   Class $filename'
             '%'
@@ -88,7 +88,7 @@ end
             '%% Constructor'
             'methods'
             '    function obj = $filename(varargin)'
-            '    % Constructor for $filename class'
+            '        % Constructor for $filename class.'
             ''
             '    end'
             ''
