@@ -63,7 +63,7 @@ end
         
         template = { ...
             'classdef $filename < handle'
-            '%$ One-line description here, please.'
+            '% One-line description here, please.'
             '%'
             '%   Class $filename'
             '%'

@@ -68,16 +68,16 @@ end
     function out = parse(funName)
         
         template = { ...
-            'function test_suite = $filename'
-            '%$FILENAME  Test case for the file $funname.'
+            'function tests = $filename'
+            '% Test suite for the file $funname.'
             '%'
-            '%   Test case for the file $funname'
+            '%   Test suite for the file $funname'
             '%'
             '%   Example'
             '%   $filename'
             '%'
             '%   See also'
-            '%   $funname'
+            '%     $funname'
             ''
             '% ------'
             '% Author: $author'
@@ -85,11 +85,13 @@ end
             ['% Created: $date,    using Matlab ' version]
             '% Copyright $year $company.'
             ''
-            'test_suite = buildFunctionHandleTestSuite(localfunctions);'
+            'tests = functiontests(localfunctions);'
             ''
             'function test_Simple(testCase) %#ok<*DEFNU>'
-            '% Test call of function without argument'
+            '% Test call of function without argument.'
             '$funname();'
+            'value = 10;'
+            'assertEqual(testCase, value, 10);'
             ''
             ''};
         
