@@ -1,23 +1,25 @@
-function newClass(varargin)
-% Creates a new file for editing a class.
+function newEnum(varargin)
+% Creates a new file for editing an enumeration class.
 %
-%   newClass(NEWCLASSNAME) opens the editor and pastes the content of a
-%   user-defined template into the file NEWCLASSNAME.m.
+%   newEnum(ENUMNAME)
+%   opens the editor and pastes the content of a user-defined template into
+%   the file ENUMNAME.m. 
 %
+%   Example
+%   newEnum
 %
 %   References
-%     Based on file 'tedit' from Peter Bodin.
+%   Based on file 'tedit' from Peter Bodin.
 %
 %   See also
-%     newEnum, newTest
-%
-
+%     newClass, newTest
+ 
 % ------
 % Author: David Legland
 % e-mail: david.legland@inrae.fr
-% Created: 2011-07-26,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2011 INRA - Cepia Software Platform.
-
+% INRAE - BIA Research Unit - BIBS Platform (Nantes)
+% Created: 2020-12-09,    using Matlab 9.8.0.1323502 (R2020a)
+% Copyright 2020 INRAE.
 switch nargin
     case 0
         edit
@@ -66,13 +68,13 @@ end
     function out = parse(func)
         
         template = { ...
-            'classdef $filename < handle'
+            'classdef $filename'
             '% One-line description here, please.'
             '%'
-            '%   Class $filename'
+            '%   Enumeration $filename'
             '%'
             '%   Example'
-            '%   $filename'
+            '%     $filename'
             '%'
             '%   See also'
             '%'
@@ -84,24 +86,50 @@ end
             '% Copyright $year $company.'
             ''
             ''
-            '%% Properties'
-            'properties'
+            '%% Enumerates the different cases'
+            'enumeration'
+            '    First(''First item'');'
+            '    Second(''Second item'');'
             'end % end properties'
+            ''
+            ''
+            '%% Static methods'
+            'methods (Static)'
+            '    function res = parse(label)'
+            '        % Identifies $filename from a char array.'
+            '        if nargin == 0 || ~ischar(label)'
+            '            error(''requires a character array as input argument'');'
+            '        end'
+            '        '
+            '        mc = ?$filename;'
+            '        itemList = mc.EnumerationMemberList;'
+            '        for i = 1:length(itemList)'
+            '            mitem = itemList(i);'
+            '            item = $filename.(mitem.Name);'
+            '            if strcmpi(label, item.Label)'
+            '                res = item;'
+            '                return;'
+            '            end'
+            '            error(''Unrecognized $filename label: %s'', label);'
+            '        end'
+            '    end'
+            'end % end methods'
             ''
             ''
             '%% Constructor'
             'methods'
-            '    function obj = $filename(varargin)'
+            '    function obj = $filename(label, varargin)'
             '        % Constructor for $filename class.'
-            ''
+            '        obj.Label = label;'
             '    end'
             ''
             'end % end constructors'
             ''
             ''
-            '%% Methods'
-            'methods'
-            'end % end methods'
+            '%% Properties'
+            'properties'
+            '    Label;'
+            'end % end properties'
             ''
             'end % end classdef'
             ''};
@@ -130,4 +158,3 @@ end
         out = sprintf('%s\n', template{:});
     end
 end
-
