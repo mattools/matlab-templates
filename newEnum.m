@@ -1,18 +1,36 @@
 function newEnum(varargin)
-% Creates a new file for editing an enumeration class.
+% Creates a new file for editing an Enumeration class.
 %
 %   newEnum(ENUMNAME)
 %   opens the editor and pastes the content of a user-defined template into
 %   the file ENUMNAME.m. 
+%   Global variables of the template can be modified by editing the end of
+%   the "newEnum" file.
+%
+%   Some static methods are implemented to retrieve enumeration items from
+%   either their name, or by a more detailed label.
 %
 %   Example
-%   newEnum
+%     % Retrieve an Operation from its name
+%     % (equivalent to op1 = Operations.FirstOp)
+%     op1 = Operations.fromName('FirstOp');
+%     op1 = 
+%       Operations enumeration
+%         FirstOp
+%
+%     % Retrieve an Operation from its label
+%     op2 = Operations.fromLabel('User-defined Operation')
+%     op2 = 
+%       Operations enumeration
+%         UserOp
+%
+%
 %
 %   References
 %   Based on file 'tedit' from Peter Bodin.
 %
 %   See also
-%     newClass, newTest
+%     newClass, newTest, Operations
  
 % ------
 % Author: David Legland
@@ -95,8 +113,58 @@ end
             ''
             '%% Static methods'
             'methods (Static)'
-            '    function res = parse(label)'
-            '        % Identifies $filename from a char array.'
+            '    function res = allNames()'
+            '        % Returns a cell list with all enumeration names.'
+            '        mc = ?Operations;'
+            '        itemList = mc.EnumerationMemberList;'
+            '        nItems = length(itemList);'
+            '        res = cell(1, nItems);'
+            '        '
+            '        for i = 1:nItems'
+            '            % retrieve current enumeration item'
+            '            mitem = itemList(i);'
+            '            res{i} = mitem.Name;'
+            '        end'
+            '    end'
+            '    '
+            '    function res = fromName(name)'
+            '        % Identifies a $filename from its name.'
+            '        if nargin == 0 || ~ischar(name)'
+            '            error(''requires a character array as input argument'');'
+            '        end'
+            '        '
+            '        mc = ?$filename;'
+            '        itemList = mc.EnumerationMemberList;'
+            '        for i = 1:length(itemList)'
+            '            % retrieve current enumeration item'
+            '            mitem = itemList(i);'
+            '            item = $filename.(mitem.Name);'
+            '            if strcmpi(name, char(item))'
+            '                res = item;'
+            '                return;'
+            '            end'
+            '        end'
+            '        '
+            '        error(''Unrecognized $filename name: %s'', name);'
+            '    end'
+            '    '
+            '    function res = allLabels()'
+            '        % Returns a cell list with all enumeration names.'
+            '        mc = ?Operations;'
+            '        itemList = mc.EnumerationMemberList;'
+            '        nItems = length(itemList);'
+            '        res = cell(1, nItems);'
+            '        '
+            '        for i = 1:nItems'
+            '            % retrieve current enumeration item'
+            '            mitem = itemList(i);'
+            '            item = Operations.(mitem.Name);'
+            '            res{i} = item.Label;'
+            '        end'
+            '    end'
+            '    '
+            '    function res = fromLabel(label)'
+            '        % Identifies a $filename from its label.'
             '        if nargin == 0 || ~ischar(label)'
             '            error(''requires a character array as input argument'');'
             '        end'
@@ -104,14 +172,16 @@ end
             '        mc = ?$filename;'
             '        itemList = mc.EnumerationMemberList;'
             '        for i = 1:length(itemList)'
+            '            % retrieve current enumeration item'
             '            mitem = itemList(i);'
             '            item = $filename.(mitem.Name);'
             '            if strcmpi(label, item.Label)'
             '                res = item;'
             '                return;'
             '            end'
-            '            error(''Unrecognized $filename label: %s'', label);'
             '        end'
+            '        '
+            '        error(''Unrecognized $filename label: %s'', label);'
             '    end'
             'end % end methods'
             ''
