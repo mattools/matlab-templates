@@ -158,7 +158,7 @@ end
             '        for i = 1:nItems'
             '            % retrieve current enumeration item'
             '            mitem = itemList(i);'
-            '            item = Operations.(mitem.Name);'
+            '            item = $filename.(mitem.Name);'
             '            res{i} = item.Label;'
             '        end'
             '    end'
