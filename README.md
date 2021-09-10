@@ -4,16 +4,25 @@ Matlab-Templates is a collection of functions for quickly generating pre-edited 
 for specific use cases: creating new classes, new tests...
 It is based on the 'tedit' function, originally written by Peter Bodin.
 
-Each function in the template has a name in the 'newXXX' format. 
-When the function is called with the name of the item, a new file is created, and the editor opens
+The main functions are:
+
+* **newClass**: create a new file containing a class definition template
+* **newTest**: create a new file containing a minimal implementation for running unit tests
+* **newEnum**: create a new file containing a minimal implementation for an enumeration class
+
+Each function has to be called with the name of the item to create. 
+This creates a new file (based on the item name), and opens the editor 
 with a pre-edited header and code structure.
-In particular, author name, copyright information, date of creation... are automatically updated.
-The templates can be modified by editing the 'newXXX' functions.
+In particular, author name, copyright information, date of creation... are automatically populated
+based on the templates defined in the 'newXXX' functions.
 
+## Installation
 
-## Main functions
+The library is composed of a single directory containing all the necessary functions. 
+The installation can be performed by simply cloning (or extracting the archive), 
+and adding the path to the library to the Matlab path list.
 
-### Creating new class
+## Creating a new class
 
 The newClass function can be used to create a new file containing a class definition.
 
@@ -26,16 +35,10 @@ The new file contains the following code patterns:
 * a constructor stub
 * space for specific methods
 
-### Creating new test
 
-The newTest function can be used to create a new file containing a minimal implementation for running unit tests.
+### Class pattern example
 
-    newTest(FUNCTIONTOTEST) 
-
-
-## Class pattern example
-
-The following is the result of the creation of a new class called `SampleClass` , using the `newClass('SampleClass')`  command:
+The following is the result of the creation of a new file called `SampleClass.m`, defining the class `SampleClass`, using the command  `newClass('SampleClass')`:
 
     classdef SampleClass < handle
     % One-line description here, please.
@@ -76,4 +79,37 @@ The following is the result of the creation of a new class called `SampleClass` 
     
     end % end classdef
 
+
+## Creating new test
+
+The newTest function can be used to create a new file containing a minimal implementation for running unit tests.
+
+    newTest(FUNCTIONTOTEST) 
+
+The following is the result of the command `newTest('foo')`:
+
+    function tests = test_foo
+    % Test suite for the file foo.
+    %
+    %   Test suite for the file foo
+    %
+    %   Example
+    %   test_foo
+    %
+    %   See also
+    %     foo
+    
+    % ------
+    % Author: David Legland
+    % e-mail: david.legland@inrae.fr
+    % Created: 2021-09-10,    using Matlab 9.10.0.1684407 (R2021a) Update 3
+    % Copyright 2021 INRAE - BIA-BIBS.
+    
+    tests = functiontests(localfunctions);
+    
+    function test_Simple(testCase) %#ok<*DEFNU>
+    % Test call of function without argument.
+    foo();
+    value = 10;
+    assertEqual(testCase, value, 10);
 
