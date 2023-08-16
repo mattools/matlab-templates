@@ -35,11 +35,13 @@ The new file contains the following code patterns:
 * a constructor stub
 * space for specific methods
 
+You need to edit the different files for updating user-specific information (author name, contact email, copyright notice...). 
 
 ### Class pattern example
 
 The following is the result of the creation of a new file called `SampleClass.m`, defining the class `SampleClass`, using the command  `newClass('SampleClass')`:
 
+```matlab
     classdef SampleClass < handle
     % One-line description here, please.
     %
@@ -78,6 +80,7 @@ The following is the result of the creation of a new file called `SampleClass.m`
     end % end methods
     
     end % end classdef
+```
 
 
 ## Creating new test
@@ -88,6 +91,7 @@ The newTest function can be used to create a new file containing a minimal imple
 
 The following is the result of the command `newTest('foo')`:
 
+```matlab
     function tests = test_foo
     % Test suite for the file foo.
     %
@@ -112,4 +116,5 @@ The following is the result of the command `newTest('foo')`:
     foo();
     value = 10;
     assertEqual(testCase, value, 10);
+```
 
