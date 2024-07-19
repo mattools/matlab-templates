@@ -26,7 +26,7 @@ and adding the path to the library to the Matlab path list.
 
 The newClass function can be used to create a new file containing a class definition.
 
-    newClass(NEWCLASSNAME) 
+    newClass('MyClassName') 
 
 The new file contains the following code patterns:
 
@@ -118,3 +118,6 @@ The following is the result of the command `newTest('foo')`:
     assertEqual(testCase, value, 10);
 ```
 
+## Customization
+
+To change author name, affilation, or the general layout of templates, simply edit the template files.
