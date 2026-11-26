@@ -15,54 +15,39 @@ function newTest(varargin)
 % Created: 2011-07-26,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
-% HISTORY
-% 2016-07-19 update for new version of Matlab
 
-
-switch nargin
-    case 0
-        edit
-        warning('newTest:MissingArgument', ...
-            'newTest without argument is the same as edit');
-        return;
-        
-    case 1
-        funName = varargin{1};
-        fileName = ['test_' funName];
-        edit(fileName);
-        
-    otherwise
-        error('too many input arguments');
-        
+% check number of input arguments
+if nargin == 0
+    edit
+    warning('newTest:NoInputArgument', ...
+        'newTest without argument is the same as edit')
+    return;
 end
 
-% Matlab interface changed with 7.12.0, so we need to switch
-if verLessThan('matlab','7.12.0') 
-    try
-        % Define the handle for the java commands:
-        edhandle = com.mathworks.mlservices.MLEditorServices;
-        
-        % get editor active document
-        doc = edhandle.builtinGetActiveDocument;
-        
-        % append template header
-        text = parse(funName);
-        edhandle.builtinAppendDocumentText(doc, text);
-    catch ex
-        rethrow(ex)
-    end
-else
-    try
-        % get editor active document
-        editorObject = matlab.desktop.editor.getActive;
-        
-        % append template header
-        text = parse(funName);
-        editorObject.appendText(text);
-        
-    catch ex
-        rethrow(ex)
-    end
+if nargin > 1
+    error('too many input arguments')
+end
+
+% extract the name and the path of the function to edit
+fname = varargin{:};
+[fpath, fname] = fileparts(fname);
+if isempty(fpath)
+    fpath = pwd;
+end
+
+% opens a new document in the editor
+edit(fullfile(fpath, fname));
+
+try
+    % get editor active document
+    editorObject = matlab.desktop.editor.getActive;
+
+    % append template header
+    text = parse(funName);
+    editorObject.appendText(text);
+
+catch ex
+    rethrow(ex)
 end
 
 end

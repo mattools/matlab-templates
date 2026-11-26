@@ -38,49 +38,39 @@ function newEnum(varargin)
 % INRAE - BIA Research Unit - BIBS Platform (Nantes)
 % Created: 2020-12-09,    using Matlab 9.8.0.1323502 (R2020a)
 % Copyright 2020 INRAE.
-switch nargin
-    case 0
-        edit
-        warning('newClass:MissingArgument', ...
-            'newClass without argument is the same as edit');
-        return;
-        
-    case 1
-        fname = varargin{:};
-        edit(fname);
-        
-    otherwise
-        error('too many input arguments');
-        
+
+% check number of input arguments
+if nargin == 0
+    edit
+    warning('newEnum:NoInputArgument', ...
+        'newEnum without argument is the same as edit')
+    return;
 end
 
-% Matlab interface changed with 7.12.0, so we need to switch
-if verLessThan('matlab','7.12.0') 
-    try
-        % Define the handle for the java commands:
-        edhandle = com.mathworks.mlservices.MLEditorServices;
-        
-        % get editor active document
-        doc = edhandle.builtinGetActiveDocument;
-        
-        % append template header
-        text = parse(fname);
-        edhandle.builtinAppendDocumentText(doc, text);
-    catch ex
-        rethrow(ex)
-    end
-else
-    try
-        % get editor active document
-        editorObject = matlab.desktop.editor.getActive;
-        
-        % append template header
-        text = parse(fname);
-        editorObject.appendText(text);
-        
-    catch ex
-        rethrow(ex)
-    end
+if nargin > 1
+    error('too many input arguments')
+end
+
+% extract the name and the path of the function to edit
+fname = varargin{:};
+[fpath, fname] = fileparts(fname);
+if isempty(fpath)
+    fpath = pwd;
+end
+
+% opens a new document in the editor
+edit(fullfile(fpath, fname));
+
+try
+    % get editor active document
+    editorObject = matlab.desktop.editor.getActive;
+
+    % append template header
+    text = parse(fname);
+    editorObject.appendText(text);
+
+catch ex
+    rethrow(ex)
 end
 
 end
