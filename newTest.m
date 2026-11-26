@@ -65,62 +65,62 @@ else
     end
 end
 
-    function out = parse(funName)
-        
-        template = { ...
-            'function tests = $filename'
-            '% Test suite for the file $funname.'
-            '%'
-            '%   Test suite for the file $funname'
-            '%'
-            '%   Example'
-            '%   $filename'
-            '%'
-            '%   See also'
-            '%     $funname'
-            ''
-            '% ------'
-            '% Author: $author'
-            '% e-mail: $mail'
-            ['% Created: $date,    using Matlab ' version]
-            '% Copyright $year $company.'
-            ''
-            'tests = functiontests(localfunctions);'
-            ''
-            'function test_Simple(testCase) %#ok<*DEFNU>'
-            '% Test call of function without argument.'
-            '$funname();'
-            'value = 10;'
-            'assertEqual(testCase, value, 10);'
-            ''
-            ''};
-        
-        repstr = {...
-            '$filename'
-            '$FILENAME'
-            '$funname'
-            '$date'
-            '$year'
-            '$author'
-            '$mail'
-            '$company'};
-        
-        testName = ['test_' funName];
-        
-        repwithstr = {...
-            testName
-            upper(testName)
-            funName
-            datestr(now, 29)
-            datestr(now, 10)
-            'David Legland'
-            'david.legland@inrae.fr'
-            'INRAE - BIA-BIBS'};
-        
-        for k = 1:numel(repstr)
-            template = strrep(template, repstr{k}, repwithstr{k});
-        end
-        out = sprintf('%s\n', template{:});
-    end
 end
 
+function out = parse(funName)
+
+template = { ...
+    'function tests = $filename'
+    '% Test suite for the file $funname.'
+    '%'
+    '%   Test suite for the file $funname'
+    '%'
+    '%   Example'
+    '%   $filename'
+    '%'
+    '%   See also'
+    '%     $funname'
+    ''
+    '% ------'
+    '% Author: $author'
+    '% e-mail: $mail'
+    ['% Created: $date,    using Matlab ' version]
+    '% Copyright $year $company.'
+    ''
+    'tests = functiontests(localfunctions);'
+    ''
+    'function test_Simple(testCase) %#ok<*DEFNU>'
+    '% Test call of function without argument.'
+    '$funname();'
+    'value = 10;'
+    'assertEqual(testCase, value, 10);'
+    ''
+    ''};
+
+repstr = {...
+    '$filename'
+    '$FILENAME'
+    '$funname'
+    '$date'
+    '$year'
+    '$author'
+    '$mail'
+    '$company'};
+
+testName = ['test_' funName];
+
+repwithstr = {...
+    testName
+    upper(testName)
+    funName
+    char(datetime('now', 'format', 'yyyy-MM-dd'))
+    char(datetime('now', 'format', 'yyyy'))
+    'David Legland'
+    'david.legland@inrae.fr'
+    'INRAE - BIA-BIBS'};
+
+for k = 1:numel(repstr)
+    template = strrep(template, repstr{k}, repwithstr{k});
+end
+out = sprintf('%s\n', template{:});
+end

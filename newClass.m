@@ -63,71 +63,72 @@ else
     end
 end
 
-    function out = parse(func)
-        
-        template = { ...
-            'classdef $filename < handle'
-            '% One-line description here, please.'
-            '%'
-            '%   Class $filename'
-            '%'
-            '%   Example'
-            '%   $filename'
-            '%'
-            '%   See also'
-            '%'
-            ''
-            '% ------'
-            '% Author: $author'
-            '% e-mail: $mail'
-            ['% Created: $date,    using Matlab ' version]
-            '% Copyright $year $company.'
-            ''
-            ''
-            '%% Properties'
-            'properties'
-            'end % end properties'
-            ''
-            ''
-            '%% Constructor'
-            'methods'
-            '    function obj = $filename(varargin)'
-            '        % Constructor for $filename class.'
-            ''
-            '    end'
-            ''
-            'end % end constructors'
-            ''
-            ''
-            '%% Methods'
-            'methods'
-            'end % end methods'
-            ''
-            'end % end classdef'
-            ''};
-        
-        repstr = {...
-            '$filename'
-            '$FILENAME'
-            '$date'
-            '$year'
-            '$author'
-            '$mail'
-            '$company'};
-        
-        repwithstr = {...
-            func
-            upper(func)
-            datestr(now, 29)
-            datestr(now, 10)
-            'David Legland'
-            'david.legland@inrae.fr'
-            'INRAE - BIA-BIBS'};
-        
-        for k = 1:numel(repstr)
-            template = strrep(template, repstr{k}, repwithstr{k});
-        end
-        out = sprintf('%s\n', template{:});
-    end
+end
+
+function out = parse(func)
+
+template = { ...
+    'classdef $filename < handle'
+    '% One-line description here, please.'
+    '%'
+    '%   Class $filename'
+    '%'
+    '%   Example'
+    '%   $filename'
+    '%'
+    '%   See also'
+    '%'
+    ''
+    '% ------'
+    '% Author: $author'
+    '% e-mail: $mail'
+    ['% Created: $date,    using Matlab ' version]
+    '% Copyright $year $company.'
+    ''
+    ''
+    '%% Properties'
+    'properties'
+    'end % end properties'
+    ''
+    ''
+    '%% Constructor'
+    'methods'
+    '    function obj = $filename(varargin)'
+    '        % Constructor for $filename class.'
+    ''
+    '    end'
+    ''
+    'end % end constructors'
+    ''
+    ''
+    '%% Methods'
+    'methods'
+    'end % end methods'
+    ''
+    'end % end classdef'
+    ''};
+
+repstr = {...
+    '$filename'
+    '$FILENAME'
+    '$date'
+    '$year'
+    '$author'
+    '$mail'
+    '$company'};
+
+repwithstr = {...
+    func
+    upper(func)
+    char(datetime('now', 'format', 'yyyy-MM-dd'))
+    char(datetime('now', 'format', 'yyyy'))
+    'David Legland'
+    'david.legland@inrae.fr'
+    'INRAE - BIA-BIBS'};
+
+for k = 1:numel(repstr)
+    template = strrep(template, repstr{k}, repwithstr{k});
+end
+out = sprintf('%s\n', template{:});
 end
 
