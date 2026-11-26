@@ -1,5 +1,5 @@
 classdef Operations
-% One-line description here, please.
+% Sample code illustrating the result of the newEnum function.
 %
 %   Enumeration Operations
 %
