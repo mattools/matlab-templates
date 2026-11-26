@@ -22,8 +22,8 @@ The library is composed of a single directory containing all the required functi
 The installation can be performed by simply cloning (or extracting the archive), 
 and adding the path to the library to the Matlab path list.
 
-After installation, do not forget to update the different files to enter *your* name
-and *your* company name! You can also update the template according to your specific needs.
+After installation, do not forget to update the different files to enter **your** name
+and **your** company name! You can also update the template according to your specific needs.
 
 ## Creating a new class
 
